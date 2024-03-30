@@ -9,7 +9,6 @@ export async function middleware(req: NextRequest) {
     data: { session },
     error,
   } = await supabase.auth.getSession();
-  console.log("Middleware");
   console.log(session);
   if (!session) {
     return NextResponse.rewrite(new URL("/login", req.url));

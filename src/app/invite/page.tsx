@@ -5,24 +5,26 @@ import React, { useState } from "react";
 
 type Props = {};
 
-const LoginPage = (props: Props) => {
+const InvitePage = (props: Props) => {
   const router = useRouter();
-  const [formData, setFormData] = useState<{ email: string; password: string }>(
-    {
-      email: "",
-      password: "",
-    }
-  );
+  const [formData, setFormData] = useState<{ email: string }>({
+    email: "",
+  });
 
-  const login = async () => {
+  const [success, setSuccess] = useState(false);
+
+  const invite = async () => {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithOtp({
         email: formData.email,
-        password: formData.password,
+        options: {
+          shouldCreateUser: true,
+        },
       });
+      console.log("INVITE DATA");
+      console.log(data, error);
       if (data) {
-        console.log(data);
-        router.refresh();
+        setSuccess(true);
       }
     } catch (error) {
       console.log(error);
@@ -47,20 +49,16 @@ const LoginPage = (props: Props) => {
           onChange={handleChange}
         />
       </div>
-      <div className="grid">
-        <label>Password</label>
-        <input
-          type="password"
-          name="password"
-          value={formData?.password}
-          onChange={handleChange}
-        />
-      </div>
+      {success && (
+        <div className="my-4 bg-green-100 px-2 text-green-600">
+          A email has ben sent to {formData.email} to login.
+        </div>
+      )}
       <div>
-        <button onClick={login}>Login</button>
+        <button onClick={invite}>Invite</button>
       </div>
     </div>
   );
 };
 
-export default LoginPage;
+export default InvitePage;

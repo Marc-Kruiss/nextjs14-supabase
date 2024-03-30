@@ -7,9 +7,6 @@ export async function POST(req: NextRequest) {
 
   const formData = await req.formData();
 
-  console.log("POST SIGNUP DATA");
-  console.log(formData);
-
   const email = String(formData.get("email"));
   const password = String(formData.get("password"));
 
