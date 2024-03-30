@@ -1,14 +1,4 @@
-import { supabase, supabaseAdmin } from "@/lib/supabase";
-
+"use client";
 export default function Home() {
-  const setNewView = async () => {
-    console.log("Setting new view...");
-    const { data, error } = await supabase
-      .from("views")
-      .insert({ name: "random name" });
-    if (data) console.log(data);
-    if (error) console.log(error);
-  };
-  setNewView();
-  return <div>Hello</div>;
+  return <div>You are Logged in</div>;
 }
